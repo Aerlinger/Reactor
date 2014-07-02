@@ -4,7 +4,7 @@ type Worker
   available::Bool
   pid::Int
   rref::RemoteRef
-    
+
   Worker(available::Bool, pid::Int) = new(available, pid, nothing)
 end
 
@@ -14,7 +14,7 @@ end
 
 function wait_for_process(n::Int)
   for worker in workers()
-    
+
   end
 end
 
@@ -26,8 +26,6 @@ function count_heads(n)
     end
     c
 end
-
-
 
 function producer()
   produce(:(a = 7))
@@ -55,9 +53,9 @@ end
 
 #workers = []
 
-function setup_workers(num_workers::Int) 
+function setup_workers(num_workers::Int)
   addprocs(num_workers)
-  
+
   for i in procs()
     push!(workers, worker(true, i))
   end
@@ -68,7 +66,7 @@ function available_workers()
     worker.available
   end
 end
-    
+
 function find_worker_by_pid(pid::Int)
   filter(workers) do worker
     worker.pid == pid
@@ -87,10 +85,10 @@ function fork(f::Function, args)
   worker = get_available_worker()
   rref = remotecall(worker.pid, f, args)
   worker.available = false
-  
-  
+
+
 end
-    
+
 function after_fork()
 end
 
@@ -118,7 +116,7 @@ function reactor()
 end
 
 
-##spawn_with_timeout(15) do  
+##spawn_with_timeout(15) do
 ##end
 
 
@@ -133,7 +131,7 @@ end
 # # Configuration
 
 # num_workers
-# timeout 
+# timeout
 
 
 end # module
